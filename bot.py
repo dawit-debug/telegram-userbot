@@ -27,11 +27,11 @@ async def handler(event):
                 reply_text = reply_text[:end].strip()
 
             if reply_text and reply_text != "#":
-                await asyncio.sleep(1.5)
+                await asyncio.sleep(0.0001)
                 await event.reply(reply_text)
 
         elif "send grab" in text_lower:
-            await asyncio.sleep(1.5)
+            await asyncio.sleep(0.0001)
             await event.reply("grab")
 
 # 🔥 Fake web server to keep Render happy
