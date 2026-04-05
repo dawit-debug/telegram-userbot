@@ -55,7 +55,7 @@ async def main_colab_runner():
         # Keep the Colab cell alive by periodically yielding control.
         # This aims to prevent Colab from cancelling the cell due to perceived inactivity.
         while True:
-            await asyncio.sleep(60 * 5) # Sleep for 5 minutes
+            await asyncio.sleep(0.01 * 0.01) # Sleep for..
             if bot_task.done():
                 print("Bot task finished or cancelled.")
                 break
@@ -74,6 +74,21 @@ async def main_colab_runner():
             await asyncio.gather(bot_task, return_exceptions=True)
         print("Colab cell runner finished.")
 
-import asyncio
-if __name__=="__main__":
-    asyncio.run(main_colab_runner())
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running")
+
+def run_web():
+    port = 10000
+    server = HTTPServer(("0.0.0.0", port), Handler)
+    server.serve_forever()
+
+# Run web server in separate thread
+threading.Thread(target=run_web).start()
+
+# Start Telegram bot
+client.start()
+print("✅ Userbot running...")
+client.run_until_disconnected()
