@@ -74,4 +74,6 @@ async def main_colab_runner():
             await asyncio.gather(bot_task, return_exceptions=True)
         print("Colab cell runner finished.")
 
-await main_colab_runner()
+import asyncio
+if __name__=="__main__":
+    asyncio.run(main_colab_runner())
